@@ -2,6 +2,10 @@
 #include <SPI.h>
 #include <EEPROM.h>
 #include "DHT.h"
+#include "melody.h"
+//#include "pitches.h"
+#include <NewTone.h>
+
 
 //pin definition
 #define MQ5 A0
@@ -87,8 +91,7 @@ void setup() {
   //PCMSK1 |= 0b00010100; // PCINT12 (A4) e PCINT10 (A2)
   interrupts();
 
-  beep(50);
-  beep(50);
+  beepOpen();
 
   Serial.begin(9600);
   attachInterrupt(digitalPinToInterrupt(BUTTON), intShow, RISING);
@@ -133,7 +136,6 @@ void loop() {
   int h = dht.readHumidity();
 
   if (show == true) {
-    //digitalWrite(B, HIGH);
     digitalWrite(DISPLAY_BACKLIGHT, HIGH);
     textTemp(t, tmax, tmin);
     textHum(h, hmax, hmin);
@@ -212,6 +214,7 @@ void loop() {
 
   stato = setStatus(tStatus, hStatus, gStatus);
   setLed(stato);
+  setBuzzer(stato);
 
   // QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI
   //  if (digitalRead(PIR) == HIGH) {
@@ -256,8 +259,6 @@ void conversione(float ratio, float m, float q) {
 void rect(int pos1, int pos2, int pos3, int pos4, int color) {
   tft.fillRect(pos1, pos2, pos3, pos4, color);
 }
-
-
 
 int gettStatus(float t) {
   if (t > 18.0 && t < 22.0) {
@@ -336,6 +337,25 @@ void setLed(int stato) {
       digitalWrite(R, LOW);
       digitalWrite(G, LOW);
       digitalWrite(B, LOW);
+      break;
+  }
+}
+
+
+void setBuzzer(int stato) {
+  switch (stato) {
+    case 0: //stato zero
+
+      break;
+    case 1: //stato ok verde
+      break;
+    case 2: //stato a rischio blu
+      beepOpen();
+      break;
+    case 3: //stato critico rosso
+      break;
+      beepWarning();
+    default: //stato default
       break;
   }
 }
@@ -419,13 +439,6 @@ void eraseGas() {
   tft.setTextColor(WHITE, BLACK);
   tft.setTextSize(2);
   tft.println("     ");
-}
-
-void beep(unsigned char delayms) {                       // Created a function for beep
-  analogWrite(BUZZER, 150);                                      // This will set pin 11 to high
-  delay(delayms);                                                             // Giving a delay
-  analogWrite(BUZZER , 0);                                       // This will set pin 11 to LOW
-  delay(delayms);                                                             // Giving a delay
 }
 
 void intShow() {
