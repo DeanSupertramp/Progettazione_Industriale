@@ -25,7 +25,6 @@
 #define BUZZER 12
 #define TFT_SCLK 13  // Clock out
 
-
 #define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
@@ -81,7 +80,6 @@ DHT dht(DHTPIN, DHTTYPE);
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 void setup() {
-
   noInterrupts();
   PCICR |= 0b00000111; //abilito le porte B, C e D
   //PCMSK2 |= 0b00010000; // PCINT20 (D4)
