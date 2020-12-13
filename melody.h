@@ -23,10 +23,10 @@ void beepOpen() {
     // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noNewTone(BUZZER);
     interrupts();
   }
-  // stop the tone playing:
-  noNewTone(BUZZER);
 }
 
 // notes in the melody:
@@ -50,8 +50,8 @@ void beepWarning() {
     // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noNewTone(BUZZER);
     interrupts();
   }
-  // stop the tone playing:
-  noNewTone(BUZZER);
 }
