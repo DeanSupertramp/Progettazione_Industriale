@@ -32,7 +32,6 @@
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
-
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 void rect(int pos1, int pos2, int pos3, int pos4, int color) {

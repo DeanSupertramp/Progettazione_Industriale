@@ -6,7 +6,8 @@
 //#include "pitches.h"
 #include <NewTone.h>
 #include "displayFunction.h"
-
+#include "getDHT22.h"
+#include "getMQ5.h"
 
 //pin definition
 #define MQ5 A0
@@ -30,58 +31,24 @@
 #define BUZZER 12
 #define TFT_SCLK 13  // Clock out
 
-#define BLACK   0x0000
-#define BLUE    0x001F
-#define RED     0xF800
-#define GREEN   0x07E0
-#define CYAN    0x07FF
-#define MAGENTA 0xF81F
-#define YELLOW  0xFFE0
-#define WHITE   0xFFFF
-
-#define DHTTYPE DHT22
-
 int calibrationTime = 5;
 
 volatile bool show = false;
 
 float t = 0;
 int h = 0;
-float t_mean = 0;
-float h_mean = 0;
+//float t_mean = 0;
+//float h_mean = 0;
 float tmax;
 float tmin = 50.0;
 int hmax;
 int hmin = 100.0;
 
-float R0 = 16981.25; //Resistenza ricavata dalla fase di calibrazione
-float sensorValue = 0.0;
-float sensor_volt = 0.0;
-int campioni = 30;
-int i = 0;
-int j = 1;
 int k = 0;
 
-float Vout = 0.0;
-float RS_gas = 0.0;
-float ratio = 0.0;
-double ppm_log = 0;
-double ppm = 0;
-float percentuale = 0;
-
-float CO[2] =      { -0.1547, 0.9143};    //data format:{ m, q};
-float Alcohol[2] = { -0.2617, 1.113};     //data format:{ m, q};
-float H2[2] =      { -0.2428, 0.7474};    //data format:{ m, q};
-float Metano[2] =  { -0.3958, 0.8973};    //data format:{ m, q};
-float GPL[2] =     { -0.4132, 0.7928};    //data format:{ m, q};
-String GAS[6] = {"undefined", "CO", "Alcohol", "H2", "Metano", "GPL"};
-
 int stato = 0;
-int tStatus = 0;
-int hStatus = 0;
-int gStatus = 0;
+//int gStatus = 0;
 
-DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   noInterrupts();
@@ -217,73 +184,6 @@ void loop() {
   setBuzzer(stato);
 }
 
-
-void getGas(float sensorValue, int campioni) {
-  for (i = 0 ; i < campioni ; i++) {
-    sensorValue += analogRead(MQ5);
-    delay(10);
-  }
-  sensorValue = sensorValue / campioni;
-  sensor_volt = sensorValue / 1024 * 5;
-  RS_gas = (5.0 - sensor_volt) * 10000 / sensor_volt;
-  ratio = RS_gas / R0;
-}
-
-void conversione(float ratio, float m, float q) {
-  Serial.println("-------------------------------------------------------------------------------");
-  String wGas = GAS[j];
-  ppm_log = (log10(ratio) - q) / m;
-  ppm = pow(10, ppm_log);
-  percentuale = ppm / 10000; // *100 / 1 milione
-  Serial.print("GAS = ");
-  Serial.println(wGas);
-  if (ppm > 1000) {
-    Serial.print(" Attenzione, "); Serial.print(wGas); Serial.println(" in eccesso!!!");
-  }
-  Serial.print("ppm_log = "); Serial.print("\t"); Serial.print(ppm_log); Serial.print("\t");
-  Serial.print("ppm = "); Serial.print("\t"); Serial.print(ppm); Serial.print("\t");
-  Serial.print("percentuale = "); Serial.print("\t"); Serial.print(percentuale); Serial.print("\t"); Serial.print("%");
-  textGas(wGas, percentuale);
-}
-
-
-int gettStatus(float t) {
-  if (t > 18.0 && t < 22.0) {
-    tStatus = 0;
-  } else  if ((t > 15.0 && t < 18.0) || (t > 22 && t < 30)) {
-    tStatus = 1;
-  } else {
-    tStatus = 2;
-  }
-  Serial.print("tStatus = "); Serial.println(tStatus);
-  return tStatus;
-}
-
-int gethStatus(int h) {
-  if (h > 40 && h < 60) {
-    hStatus = 0;
-  } else  if ((h > 30 && h < 75) || (h > 75 && h < 80)) {
-    hStatus = 1;
-  } else {
-    hStatus = 2;
-  }
-  Serial.print("hStatus = "); Serial.println(hStatus);
-  return hStatus;
-}
-
-
-int getgStatus(float ppm) {
-  if (ppm > 2000.0) {
-    gStatus = 2;
-  } else  if (ppm > 1000.0 && ppm < 2000.0) {
-    gStatus = 1;
-  } else {
-    gStatus = 0;
-  }
-  Serial.print("gStatus = "); Serial.println(gStatus);
-  return gStatus;
-}
-
 int setStatus(int tStatus, int hStatus, int gStatus) {
   int sum = tStatus + hStatus + gStatus;
   if (sum <= 1) {
@@ -345,8 +245,6 @@ void setBuzzer(int stato) {
       break;
   }
 }
-
-
 
 void intShow() {
   show = true;
