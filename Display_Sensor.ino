@@ -5,6 +5,7 @@
 #include "melody.h"
 //#include "pitches.h"
 #include <NewTone.h>
+#include "displayFunction.h"
 
 
 //pin definition
@@ -81,7 +82,6 @@ int hStatus = 0;
 int gStatus = 0;
 
 DHT dht(DHTPIN, DHTTYPE);
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 void setup() {
   noInterrupts();
@@ -246,9 +246,6 @@ void conversione(float ratio, float m, float q) {
   textGas(wGas, percentuale);
 }
 
-void rect(int pos1, int pos2, int pos3, int pos4, int color) {
-  tft.fillRect(pos1, pos2, pos3, pos4, color);
-}
 
 int gettStatus(float t) {
   if (t > 18.0 && t < 22.0) {
@@ -349,86 +346,7 @@ void setBuzzer(int stato) {
   }
 }
 
-void textGas(String wGas, float percentuale) {
-  tft.setCursor(5, 80);
-  tft.setTextColor(YELLOW, BLACK);
-  tft.setTextSize(2);
-  tft.println(wGas);
-  tft.setCursor(95, 80);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
-  tft.print(percentuale);
-  tft.println("%");
-}
 
-void textTemp(float t, float tmax, float tmin) {
-  tft.setCursor(10, 33);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("Temperatura");
-  tft.setCursor(5, 45);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(3);
-  tft.println(t);
-
-  tft.setCursor(5, 107);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("T.Max");
-  tft.setCursor(5, 120);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(1);
-  tft.println(tmax);
-
-  tft.setCursor(45, 107);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("T.Min");
-  tft.setCursor(45, 120);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(1);
-  tft.println(tmin);
-}
-
-void textHum(int h, int hmax, int hmin) {
-  tft.setCursor(110, 33);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("Umidita'");
-  tft.setCursor(115, 45);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(3);
-  tft.println(h);
-
-  tft.setCursor(90, 107);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("H.Max");
-  tft.setCursor(100, 120);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(1);
-  tft.println(hmax);
-
-  tft.setCursor(130, 107);
-  tft.setTextColor(YELLOW);
-  tft.setTextSize(1);
-  tft.println("H.Min");
-  tft.setCursor(140, 120);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(1);
-  tft.println(hmin);
-}
-
-void eraseGas() {
-  tft.setCursor(5, 80);
-  tft.setTextColor(YELLOW, BLACK);
-  tft.setTextSize(2);
-  tft.println("        ");
-  tft.setCursor(95, 80);
-  tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
-  tft.println("     ");
-}
 
 void intShow() {
   show = true;
