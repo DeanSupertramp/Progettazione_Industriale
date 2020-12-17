@@ -3,11 +3,11 @@
 #include <EEPROM.h>
 #include "DHT.h"
 #include "melody.h"
-//#include "pitches.h"
 #include <NewTone.h>
 #include "displayFunction.h"
 #include "getDHT22.h"
 #include "getMQ5.h"
+#include "interruptFunction.h"
 
 //pin definition
 #define MQ5 A0
@@ -31,24 +31,18 @@
 #define BUZZER 12
 #define TFT_SCLK 13  // Clock out
 
-int calibrationTime = 5;
-
-volatile bool show = false;
+uint8_t calibrationTime = 5;
 
 float t = 0;
 int h = 0;
-//float t_mean = 0;
-//float h_mean = 0;
 float tmax;
 float tmin = 50.0;
-int hmax;
-int hmin = 100.0;
+uint8_t hmax;
+uint8_t hmin = 100.0;
 
-int k = 0;
+uint8_t k = 0;
 
-int stato = 0;
-//int gStatus = 0;
-
+uint8_t stato = 0;
 
 void setup() {
   noInterrupts();
@@ -169,16 +163,10 @@ void loop() {
     EEPROM.write(10, h);
   }
 
-  Serial.println("");
-  Serial.println("##############################################################################");
-  Serial.println("");
-
   getGas(sensorValue, campioni);
-
   tStatus = gettStatus(t);
   hStatus = gethStatus(h);
   gStatus = getgStatus(ppm);
-
   stato = setStatus(tStatus, hStatus, gStatus);
   setLed(stato);
   setBuzzer(stato);
@@ -228,7 +216,6 @@ void setLed(int stato) {
   }
 }
 
-
 void setBuzzer(int stato) {
   switch (stato) {
     case 0: //stato zero
@@ -244,20 +231,4 @@ void setBuzzer(int stato) {
     default: //stato default
       break;
   }
-}
-
-void intShow() {
-  show = true;
-}
-
-ISR(PCINT2_vect) { // Port D, PCINT16 - PCINT23
-  show = true;
-}
-
-ISR(PCINT1_vect) { // // Port C, PCINT8 - PCINT14
-  show = true;
-}
-
-ISR(PCINT0_vect) { // // Port B, PCINT0 - PCINT7
-  show = true;
 }

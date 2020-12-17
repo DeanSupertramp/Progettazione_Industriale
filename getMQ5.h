@@ -3,7 +3,7 @@
 float R0 = 16981.25; //Resistenza ricavata dalla fase di calibrazione
 float sensorValue = 0.0;
 float sensor_volt = 0.0;
-int campioni = 30;
+uint8_t  campioni = 30;
 
 float Vout = 0.0;
 float RS_gas = 0.0;
@@ -19,10 +19,9 @@ float Metano[2] =  { -0.3958, 0.8973};    //data format:{ m, q};
 float GPL[2] =     { -0.4132, 0.7928};    //data format:{ m, q};
 String GAS[6] = {"undefined", "CO", "Alcohol", "H2", "Metano", "GPL"};
 
-int gStatus = 0;
-
-int i = 0;
-int j = 1;
+uint8_t  gStatus = 0;
+uint8_t  i = 0;
+uint8_t  j = 1;
 
 void getGas(float sensorValue, int campioni) {
   for (i = 0 ; i < campioni ; i++) {
@@ -52,7 +51,7 @@ void conversione(float ratio, float m, float q) {
   textGas(wGas, percentuale);
 }
 
-int getgStatus(float ppm) {
+uint8_t getgStatus(float ppm) {
   if (ppm > 2000.0) {
     gStatus = 2;
   } else  if (ppm > 1000.0 && ppm < 2000.0) {

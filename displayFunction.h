@@ -2,27 +2,13 @@
 #include <SPI.h>
 
 //pin definition
-#define MQ5 A0
-//#define POWER_STATE A1
-//#define SOFTSERIAL_RX A2
-//#define SOFTSERIAL_TX A3
-#define PIR A4
-#define DHTPIN A5
-//#define SLEEP_SIM A6
-#define LEDpin A7
-#define BUTTON 2
-//#define INT_SIM 3
-#define R 4
-#define B 5
-#define G 6
 #define TFT_CS        7
 #define TFT_RST        8 // Or set to -1 and connect to Arduino RESET pin
 #define TFT_DC         9
-#define DISPLAY_BACKLIGHT 10
 #define TFT_MOSI 11  // Data out
-#define BUZZER 12
 #define TFT_SCLK 13  // Clock out
 
+//color definition
 #define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800

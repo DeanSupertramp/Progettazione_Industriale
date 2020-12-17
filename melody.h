@@ -8,7 +8,7 @@ int melodyOpen[] = {
 };
 
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurationsOpen[] = {
+uint8_t noteDurationsOpen[] = {
   4, 4, 4, 4
 };
 
@@ -35,7 +35,7 @@ int melodyWarning[] = {
 };
 
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurationsWarning[] = {
+uint8_t noteDurationsWarning[] = {
   4, 4, 4, 4
 };
 
