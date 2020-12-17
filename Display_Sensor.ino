@@ -215,14 +215,6 @@ void loop() {
   stato = setStatus(tStatus, hStatus, gStatus);
   setLed(stato);
   setBuzzer(stato);
-
-  // QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI
-  //  if (digitalRead(PIR) == HIGH) {
-  //    Serial.println("MOVIMENTO");
-  //    intShow();
-  //  }
-  // QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI QUI
-
 }
 
 
@@ -251,9 +243,7 @@ void conversione(float ratio, float m, float q) {
   Serial.print("ppm_log = "); Serial.print("\t"); Serial.print(ppm_log); Serial.print("\t");
   Serial.print("ppm = "); Serial.print("\t"); Serial.print(ppm); Serial.print("\t");
   Serial.print("percentuale = "); Serial.print("\t"); Serial.print(percentuale); Serial.print("\t"); Serial.print("%");
-  ////////////////////////////////////////////////////////////////////////
   textGas(wGas, percentuale);
-  ////////////////////////////////////////////////////////////////////////
 }
 
 void rect(int pos1, int pos2, int pos3, int pos4, int color) {
@@ -345,10 +335,8 @@ void setLed(int stato) {
 void setBuzzer(int stato) {
   switch (stato) {
     case 0: //stato zero
-
       break;
     case 1: //stato ok verde
-
       break;
     case 2: //stato a rischio blu
       beepOpen();
@@ -457,38 +445,3 @@ ISR(PCINT1_vect) { // // Port C, PCINT8 - PCINT14
 ISR(PCINT0_vect) { // // Port B, PCINT0 - PCINT7
   show = true;
 }
-
-
-
-
-
-
-
-
-//
-//// notes in the melody:
-//int melodyOpen[] = {
-//  0, NOTE_C4, NOTE_D4, NOTE_E4
-//};
-//
-//// note durations: 4 = quarter note, 8 = eighth note, etc.:
-//int noteDurationsOpen[] = {
-//  4, 4, 4, 4
-//};
-//
-//void beepOpen() {
-//  noInterrupts();
-//  for (int thisNote = 0; thisNote < 4; thisNote++) {
-//    // to calculate the note duration, take one second divided by the note type.
-//    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-//    int noteDuration = 1000 / noteDurationsOpen[thisNote];
-//    NewTone(BUZZER, melodyOpen[thisNote], noteDuration);
-//    // to distinguish the notes, set a minimum time between them.
-//    // the note's duration + 30% seems to work well:
-//    int pauseBetweenNotes = noteDuration * 1.30;
-//    delay(pauseBetweenNotes);
-//    // stop the tone playing:
-//    noNewTone(BUZZER);
-//    interrupts();
-//  }
-//}
