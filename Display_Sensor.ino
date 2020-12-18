@@ -55,7 +55,7 @@ void setup() {
   beepOpen();
 
   Serial.begin(9600);
-  attachInterrupt(digitalPinToInterrupt(BUTTON), intShow, RISING);
+  attachInterrupt(digitalPinToInterrupt(BUTTON), intShow, FALLING);
   pinMode(MQ5, INPUT);
   //  pinMode(POWER_STATE, INPUT);
   pinMode(R, OUTPUT);
