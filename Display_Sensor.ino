@@ -31,7 +31,7 @@
 #define BUZZER 12
 #define TFT_SCLK 13  // Clock out
 
-uint8_t calibrationTime = 5;
+uint8_t calibrationTime = 5; ////
 
 float t = 0;
 int h = 0;
