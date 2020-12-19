@@ -20,7 +20,7 @@
 #define LEDpin A7
 #define BUTTON 2
 //#define INT_SIM 3
-#define R 4
+#define R 4 
 #define B 5
 #define G 6
 #define TFT_CS        7
