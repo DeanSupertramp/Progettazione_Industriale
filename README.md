@@ -6,8 +6,15 @@ Il sistema è basato su diversi sensori e sistemi di notifica (visivo e uditivo,
 ![](images/blockdiagram.jpg)
 
 ## Prototipo
-![](images/prototipo.png)
+<p align="center">
+<img src="images/prototipo.png" width="600">
+</p>
 
 ## Render 3D del dispositivo
-![](images/render1.png)
-![](images/render2.png)
+<p align="center">
+<img src="images/render1.png" width="400">
+</p>
+
+<p align="center">
+<img src="images/render2.png" width="400">
+</p>
